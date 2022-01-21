@@ -181,6 +181,7 @@ func (l *Layout) Copy(ctx context.Context, ref string, to target.Target, toRef s
 // CopyAll performs bulk copy operations on the stores oci layout to a provided target.Target
 func (l *Layout) CopyAll(ctx context.Context, to target.Target, toMapper func(string) (string, error)) ([]ocispec.Descriptor, error) {
 	var descs []ocispec.Descriptor
+	fmt.Println("THIS IS USING THE FORKED OCIL")
 	err := l.OCI.Walk(func(reference string, desc ocispec.Descriptor) error {
 		toRef := ""
 		if toMapper != nil {
