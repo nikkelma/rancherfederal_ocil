@@ -1,4 +1,4 @@
-module github.com/rancherfederal/ocil
+module github.com/nikkelma/rancherfederal_ocil
 
 go 1.17
 
@@ -12,6 +12,8 @@ require (
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 	oras.land/oras-go v1.1.0
 )
+
+replace github.com/rancherfederal/ocil => ./
 
 require (
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
