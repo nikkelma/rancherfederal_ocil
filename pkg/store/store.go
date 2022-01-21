@@ -186,21 +186,21 @@ func (l *Layout) CopyAll(ctx context.Context, to target.Target, toMapper func(st
 		if toMapper != nil {
 			tr, err := toMapper(reference)
 			if err != nil {
-				return err
+				return fmt.Errorf("mapper: %w", err)
 			}
 			toRef = tr
 		}
 
 		desc, err := l.Copy(ctx, reference, to, toRef)
 		if err != nil {
-			return err
+			return fmt.Errorf("layout copy: %w", err)
 		}
 
 		descs = append(descs, desc)
 		return nil
 	})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("walk: %w", err)
 	}
 	return descs, nil
 }
