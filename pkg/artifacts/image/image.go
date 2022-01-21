@@ -47,7 +47,7 @@ func NewImage(name string, opts ...remote.Option) (*Image, error) {
 	}
 
 	return &Image{
-		Name:  name,
+		Name:  r.Context().RepositoryStr(),
 		Image: img,
 	}, nil
 }
