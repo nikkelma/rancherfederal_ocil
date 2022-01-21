@@ -3,6 +3,7 @@ package store
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -38,11 +39,11 @@ func WithCache(c layer.Cache) Options {
 func NewLayout(rootdir string, opts ...Options) (*Layout, error) {
 	ociStore, err := content.NewOCI(rootdir)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("new oci: %w", err)
 	}
 
 	if err := ociStore.LoadIndex(); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("load index: %w", err)
 	}
 
 	l := &Layout{
@@ -71,33 +72,33 @@ func (l *Layout) AddOCI(ctx context.Context, oci artifacts.OCI, ref string) (oci
 	// Write manifest blob
 	m, err := oci.Manifest()
 	if err != nil {
-		return ocispec.Descriptor{}, err
+		return ocispec.Descriptor{}, fmt.Errorf("manifest: %w", err)
 	}
 
 	mdata, err := json.Marshal(m)
 	if err != nil {
-		return ocispec.Descriptor{}, err
+		return ocispec.Descriptor{}, fmt.Errorf("marshal manifest: %w", err)
 	}
 	if err := l.writeBlobData(mdata); err != nil {
-		return ocispec.Descriptor{}, err
+		return ocispec.Descriptor{}, fmt.Errorf("write blob data %w", err)
 	}
 
 	// Write config blob
 	cdata, err := oci.RawConfig()
 	if err != nil {
-		return ocispec.Descriptor{}, err
+		return ocispec.Descriptor{}, fmt.Errorf("raw config: %w", err)
 	}
 
 	static.NewLayer(cdata, "")
 
 	if err := l.writeBlobData(cdata); err != nil {
-		return ocispec.Descriptor{}, err
+		return ocispec.Descriptor{}, fmt.Errorf("write blob data: %w", err)
 	}
 
 	// write blob layers concurrently
 	layers, err := oci.Layers()
 	if err != nil {
-		return ocispec.Descriptor{}, err
+		return ocispec.Descriptor{}, fmt.Errorf("layers: %w", err)
 	}
 
 	var g errgroup.Group
@@ -108,7 +109,7 @@ func (l *Layout) AddOCI(ctx context.Context, oci artifacts.OCI, ref string) (oci
 		})
 	}
 	if err := g.Wait(); err != nil {
-		return ocispec.Descriptor{}, err
+		return ocispec.Descriptor{}, fmt.Errorf("write layers: %w", err)
 	}
 
 	// Build index
@@ -122,8 +123,12 @@ func (l *Layout) AddOCI(ctx context.Context, oci artifacts.OCI, ref string) (oci
 		URLs:     nil,
 		Platform: nil,
 	}
+	err = l.OCI.AddIndex(idx)
+	if err != nil {
+		return ocispec.Descriptor{}, fmt.Errorf("add index: %w", err)
+	}
 
-	return idx, l.OCI.AddIndex(idx)
+	return idx, nil
 }
 
 // AddOCICollection .
