@@ -14,7 +14,10 @@ require (
 	oras.land/oras-go v1.1.0
 )
 
-replace github.com/rancherfederal/ocil => ./
+replace (
+	github.com/rancherfederal/ocil => ./
+	oras.land/oras-go v1.0.0 => github.com/nikkelma/oras-project_oras-go v1.0.1-0.20220127172654-10bcb69e80cd
+)
 
 require (
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
