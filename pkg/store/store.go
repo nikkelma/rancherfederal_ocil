@@ -174,8 +174,17 @@ func (l *Layout) Flush(ctx context.Context) error {
 // Copy will copy a given reference to a given target.Target
 // 		This is essentially a wrapper around oras.Copy, but locked to this content store
 func (l *Layout) Copy(ctx context.Context, ref string, to target.Target, toRef string) (ocispec.Descriptor, error) {
-	return oras.Copy(ctx, l.OCI, ref, to, toRef,
+	// if r, ok := to.(*ocontent.Registry); ok {
+	// 	fmt.Println("ocil copy - found registry: %s", r.)
+	// }
+
+	desc, err := oras.Copy(ctx, l.OCI, ref, to, toRef,
 		oras.WithAdditionalCachedMediaTypes(consts.DockerManifestSchema2))
+
+	if err != nil {
+		return ocispec.Descriptor{}, fmt.Errorf("oras copy: ref %s, toRef %s", ref, toRef)
+	}
+	return desc, nil
 }
 
 // CopyAll performs bulk copy operations on the stores oci layout to a provided target.Target
