@@ -182,7 +182,7 @@ func (l *Layout) Copy(ctx context.Context, ref string, to target.Target, toRef s
 		oras.WithAdditionalCachedMediaTypes(consts.DockerManifestSchema2))
 
 	if err != nil {
-		return ocispec.Descriptor{}, fmt.Errorf("oras copy: ref %s, toRef %s", ref, toRef)
+		return ocispec.Descriptor{}, fmt.Errorf("oras copy: ref %s, toRef %s: %w", ref, toRef, err)
 	}
 	return desc, nil
 }
