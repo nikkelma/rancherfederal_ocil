@@ -3,7 +3,7 @@ module github.com/nikkelma/rancherfederal_ocil
 go 1.17
 
 require (
-	github.com/containerd/containerd v1.5.8
+	github.com/containerd/containerd v1.5.9
 	github.com/google/go-containerregistry v0.7.0
 	github.com/opencontainers/go-digest v1.0.0
 	github.com/opencontainers/image-spec v1.0.2
@@ -11,7 +11,7 @@ require (
 	github.com/rancherfederal/ocil v0.0.0-00010101000000-000000000000
 	github.com/spf13/afero v1.6.0
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
-	oras.land/oras-go v1.0.0
+	oras.land/oras-go v1.1.0
 )
 
 replace github.com/rancherfederal/ocil => ./
