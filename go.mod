@@ -16,7 +16,7 @@ require (
 
 replace (
 	github.com/rancherfederal/ocil => ./
-	oras.land/oras-go v1.0.0 => github.com/nikkelma/oras-project_oras-go v1.0.1-0.20220131191508-6553f583153e
+	oras.land/oras-go v1.1.0 => github.com/nikkelma/oras-project_oras-go v1.1.1-0.20220131223924-bd1e581049ea
 )
 
 require (
