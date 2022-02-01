@@ -17,7 +17,6 @@ import (
 	"oras.land/oras-go/pkg/target"
 
 	"github.com/rancherfederal/ocil/pkg/artifacts"
-	"github.com/rancherfederal/ocil/pkg/consts"
 	"github.com/rancherfederal/ocil/pkg/content"
 	"github.com/rancherfederal/ocil/pkg/layer"
 )
@@ -178,8 +177,9 @@ func (l *Layout) Copy(ctx context.Context, ref string, to target.Target, toRef s
 	// 	fmt.Println("ocil copy - found registry: %s", r.)
 	// }
 
-	desc, err := oras.Copy(ctx, l.OCI, ref, to, toRef,
-		oras.WithAdditionalCachedMediaTypes(consts.DockerManifestSchema2))
+	// desc, err := oras.Copy(ctx, l.OCI, ref, to, toRef,
+	// 	oras.WithAdditionalCachedMediaTypes(consts.DockerManifestSchema2))
+	desc, err := oras.Copy(ctx, l.OCI, ref, to, toRef)
 
 	if err != nil {
 		return ocispec.Descriptor{}, fmt.Errorf("oras copy: ref %s, toRef %s: %w", ref, toRef, err)
