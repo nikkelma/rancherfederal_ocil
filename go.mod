@@ -8,7 +8,7 @@ require (
 	github.com/opencontainers/go-digest v1.0.0
 	github.com/opencontainers/image-spec v1.0.2
 	github.com/pkg/errors v0.9.1
-	github.com/rancherfederal/ocil v0.0.0-00010101000000-000000000000
+	github.com/rancherfederal/ocil v0.0.0
 	github.com/spf13/afero v1.6.0
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 	oras.land/oras-go v1.1.0
@@ -16,7 +16,7 @@ require (
 
 replace (
 	github.com/rancherfederal/ocil => ./
-	oras.land/oras-go v1.1.0 => github.com/nikkelma/oras-project_oras-go v1.1.1-0.20220131223924-bd1e581049ea
+	oras.land/oras-go v1.1.0 => github.com/nikkelma/oras-project_oras-go v1.1.1-0.20220201001104-a75f6a419090
 )
 
 require (
